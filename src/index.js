@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom"
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import reducer, { initialState } from "./store/reducer";
+import { StateProvider } from "./store/StateProvider";
+
 const app = (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <StateProvider initialState={initialState} reducer={reducer}>
+        <App />
+    </StateProvider> 
 )
 
 ReactDOM.render(app, document.getElementById('root'));
