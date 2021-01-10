@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react"
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Layout from "./containers/Layout/Layout"
+import Homepage from "./containers/Homepage/Homepage"
+import PlaygroundWelcome from "./containers/Playground/PlaygroundWelcome/PlaygroundWelcome"
+import VideoInput from "./containers/Playground/VideoInput/VideoInput"
+import Playground from "./containers/Playground/Playground/Playground"
+import ContactUs from "./components/ContactUs/ContactUs"
+import Login from "./containers/Auth/Login/Login"
+import Register from "./containers/Auth/Register/Register"
+import Logout from "./containers/Auth/Logout/Logout"
+import PrivateRoute from "./PrivateRoute";
 
-function App() {
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route path="/contact-us" component={ContactUs} />
+            <PrivateRoute exact path="/playground" component={PlaygroundWelcome} />
+            <Route path="/playground/video-input" component={VideoInput} />
+            <Route path="/playground/output" component={Playground} />
+            <Route path="/u/login" component={Login} />
+            <Route path="/u/register" component={Register} />
+            <PrivateRoute Route path="/u/logout" component={Logout} />
+          </Switch>
+        </Suspense >
+      </Layout>
+    </BrowserRouter>
   );
 }
 
